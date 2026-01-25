@@ -41,13 +41,15 @@ Functions:
     bar - StatusBar frame - The StatusBar to be restored
 ]]
 
-local MAJOR = "LibSmoothStatusBar-1.0"
+local MAJOR = 'LibSmoothStatusBar-1.0'
 local MINOR = 1
 
 local lib, upgrade = LibStub:NewLibrary(MAJOR, MINOR)
-if not lib then return end
+if not lib then
+	return
+end
 
-lib.frame     = lib.frame     or CreateFrame('Frame')
+lib.frame = lib.frame or CreateFrame('Frame')
 lib.smoothing = lib.smoothing or {}
 
 -------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ local function AnimationTick()
 	end
 end
 
-lib.frame:SetScript("OnUpdate", AnimationTick)
+lib.frame:SetScript('OnUpdate', AnimationTick)
 
 local function SmoothSetValue(self, value)
 	local _, max = self:GetMinMaxValues()
@@ -93,14 +95,14 @@ end
 
 function lib:SmoothBar(bar)
 	if not bar.SetValue_ then
-		bar.SetValue_ = bar.SetValue;
-		bar.SetValue = SmoothSetValue;
+		bar.SetValue_ = bar.SetValue
+		bar.SetValue = SmoothSetValue
 	end
 end
 
 function lib:ResetBar(bar)
 	if bar.SetValue_ then
-		bar.SetValue = bar.SetValue_;
-		bar.SetValue_ = nil;
+		bar.SetValue = bar.SetValue_
+		bar.SetValue_ = nil
 	end
 end

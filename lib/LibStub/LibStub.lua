@@ -4,7 +4,7 @@ local LIBSTUB_MAJOR, LIBSTUB_MINOR = 'LibStub', 2 -- NEVER MAKE THIS AN SVN REVI
 local LibStub = _G[LIBSTUB_MAJOR]
 
 if not LibStub or LibStub.minor < LIBSTUB_MINOR then
-	LibStub = LibStub or {libs = {}, minors = {}}
+	LibStub = LibStub or { libs = {}, minors = {} }
 	_G[LIBSTUB_MAJOR] = LibStub
 	LibStub.minor = LIBSTUB_MINOR
 
@@ -30,5 +30,5 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 	function LibStub:IterateLibraries()
 		return pairs(self.libs)
 	end
-	setmetatable(LibStub, {__call = LibStub.GetLibrary})
+	setmetatable(LibStub, { __call = LibStub.GetLibrary })
 end

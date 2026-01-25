@@ -29,7 +29,7 @@ local DBDefaults = {
 	insanity = 'interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar',
 	astralpower = 'interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar',
 	fury = 'interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar',
-	pain = 'interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar'
+	pain = 'interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar',
 }
 local textures = {
 	['interface\\addons\\SpartanUI-Animated\\Animations\\Health\\HealthBar'] = HEALTH,
@@ -37,7 +37,7 @@ local textures = {
 	['interface\\addons\\SpartanUI-Animated\\Animations\\Mana\\Manabar'] = MANA,
 	['interface\\addons\\SpartanUI-Animated\\Animations\\Rage\\RageBar'] = RAGE,
 	['interface\\addons\\SpartanUI-Animated\\Animations\\Energy\\EnergyBar'] = ENERGY,
-	['interface\\addons\\SpartanUI-Animated\\Animations\\DeusEx\\DeusEx'] = L['DeusEx']
+	['interface\\addons\\SpartanUI-Animated\\Animations\\DeusEx\\DeusEx'] = L['DeusEx'],
 }
 
 function addon:ResetSettings()
@@ -45,7 +45,7 @@ function addon:ResetSettings()
 end
 
 function addon:OnInitialize()
-	addon.Database = SUI.SpartanUIDB:RegisterNamespace('AnimatedBars', {profile = DBDefaults})
+	addon.Database = SUI.SpartanUIDB:RegisterNamespace('AnimatedBars', { profile = DBDefaults })
 	addon.DB = addon.Database.profile
 
 	addon:CreateMemFrame(textures)
@@ -57,30 +57,21 @@ function addon:OnEnable()
 	f:RegisterEvent('PLAYER_ENTERING_WORLD')
 	f:RegisterEvent('GROUP_ROSTER_UPDATE')
 
-	if (addon.DB.enable) then
+	if addon.DB.enable then
 		if SUI_UF_player then
 			SUI_UF_player.Castbar:SetStatusBarColor(1, 1, 1, 1)
 		end
-		f:SetScript(
-			'OnEvent',
-			function(this, event, ...)
-				addon[event](addon, ...)
-			end
-		)
+		f:SetScript('OnEvent', function(this, event, ...)
+			addon[event](addon, ...)
+		end)
 		addon.Ticker = C_Timer.NewTicker(math.max(addon.DB.animationIntervalStop, 0.01), addon.NewUpdater)
-		f:SetScript(
-			'OnShow',
-			function()
-				addon.Ticker:Cancel()
-				addon.Ticker = C_Timer.NewTicker(math.max(addon.DB.animationIntervalStop, 0.01), addon.NewUpdater)
-			end
-		)
-		f:SetScript(
-			'OnHide',
-			function()
-				addon.Ticker:Cancel()
-			end
-		)
+		f:SetScript('OnShow', function()
+			addon.Ticker:Cancel()
+			addon.Ticker = C_Timer.NewTicker(math.max(addon.DB.animationIntervalStop, 0.01), addon.NewUpdater)
+		end)
+		f:SetScript('OnHide', function()
+			addon.Ticker:Cancel()
+		end)
 	else
 		addon:PLAYER_ENTERING_WORLD()
 	end
@@ -105,9 +96,9 @@ function addon:Options()
 				end,
 				set = function(info, val)
 					addon.DB.enable = val
-				end
+				end,
 			},
-			enableinfo = {name = L['ReloadUI Required'], type = 'description', order = 2},
+			enableinfo = { name = L['ReloadUI Required'], type = 'description', order = 2 },
 			health = {
 				name = L['Healthbar Texture'],
 				type = 'select',
@@ -120,7 +111,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.health = val
 					addon:SetAnimationTexture(14, val)
-				end
+				end,
 			},
 			cast = {
 				name = L['Casting'],
@@ -134,7 +125,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.cast = val
 					addon:SetAnimationTexture(15, val)
-				end
+				end,
 			},
 			mana = {
 				name = L['Mana'],
@@ -148,7 +139,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.mana = val
 					addon:SetAnimationTexture(0, val)
-				end
+				end,
 			},
 			rage = {
 				name = L['Rage'],
@@ -162,7 +153,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.rage = val
 					addon:SetAnimationTexture(1, val)
-				end
+				end,
 			},
 			energy = {
 				name = L['Energy'],
@@ -176,7 +167,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.energy = val
 					addon:SetAnimationTexture(3, val)
-				end
+				end,
 			},
 			focus = {
 				name = L['Focus'],
@@ -190,7 +181,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.focus = val
 					addon:SetAnimationTexture(4, val)
-				end
+				end,
 			},
 			runicpower = {
 				name = L['RunicPower'],
@@ -205,7 +196,7 @@ function addon:Options()
 					addon.DB.runicpower = val
 					addon:SetAnimationTexture(6, val)
 					addon:SetAnimationTexture(5, val)
-				end
+				end,
 			},
 			astralpower = {
 				name = L['AstralPower'],
@@ -219,7 +210,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.astralpower = val
 					addon:SetAnimationTexture(8, val)
-				end
+				end,
 			},
 			malestorm = {
 				name = L['Maelstrom'],
@@ -233,7 +224,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.malestorm = val
 					addon:SetAnimationTexture(11, val)
-				end
+				end,
 			},
 			insanity = {
 				name = L['Insanity'],
@@ -247,7 +238,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.insanity = val
 					addon:SetAnimationTexture(13, val)
-				end
+				end,
 			},
 			fury = {
 				name = L['Fury'],
@@ -261,7 +252,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.fury = val
 					addon:SetAnimationTexture(17, val)
-				end
+				end,
 			},
 			pain = {
 				name = L['Fury'],
@@ -275,7 +266,7 @@ function addon:Options()
 				set = function(info, val)
 					addon.DB.pain = val
 					addon:SetAnimationTexture(18, val)
-				end
+				end,
 			},
 			animationIntervalStop = {
 				name = L['Animation Speed'],
@@ -292,7 +283,7 @@ function addon:Options()
 					addon.DB.animationIntervalStop = abs(1 / tonumber(val))
 					addon.Ticker:Cancel()
 					addon.Ticker = C_Timer.NewTicker(math.max(addon.DB.animationIntervalStop, 0.01), addon.NewUpdater)
-				end
+				end,
 			},
 			resetframes = {
 				name = L['Reset to default'],
@@ -305,9 +296,9 @@ function addon:Options()
 				end,
 				func = function()
 					addon:ResetSettings()
-				end
-			}
-		}
+				end,
+			},
+		},
 	}
 
 	---@diagnostic disable-next-line: undefined-field
@@ -403,7 +394,7 @@ function addon:Refresh()
 		['boss2'] = SUI_UF_boss2,
 		['boss3'] = SUI_UF_boss3,
 		['boss4'] = SUI_UF_boss4,
-		['boss5'] = SUI_UF_boss5
+		['boss5'] = SUI_UF_boss5,
 	}
 	s_table_party_target = {
 		['target'] = SUI_UF_party_HeaderUnitButton1Target,
@@ -415,9 +406,9 @@ function addon:Refresh()
 		['party3target'] = SUI_UF_party_HeaderUnitButton4Target,
 		['partypet3'] = SUI_UF_party_HeaderUnitButton4Pet,
 		['party4target'] = SUI_UF_party_HeaderUnitButton5Target,
-		['partypet4'] = SUI_UF_party_HeaderUnitButton5Pet
+		['partypet4'] = SUI_UF_party_HeaderUnitButton5Pet,
 	}
-	if (InCombatLockdown()) then --Possible fix for incombat partyframe creation.
+	if InCombatLockdown() then --Possible fix for incombat partyframe creation.
 		C_Timer.After(10, addon.Refresh)
 	end
 	return true
