@@ -7,7 +7,7 @@
 ## IconTexture: Interface/Addons/SpartanUI-Animated/Spartan-Helm
 ## X-Curse-Project-ID: 55589
 ## X-Wago-ID: b6XVZwGp
-## X-Github: https://github.com/Wutname1/SpartanUI-Animated
+## X-Github: https://github.com/spartanui-wow/SpartanUI-Animated
 ## Category: Unit Frames
 ## Category-deDE: Einheitenfenster
 ## Category-esES: Marcos de unidades
