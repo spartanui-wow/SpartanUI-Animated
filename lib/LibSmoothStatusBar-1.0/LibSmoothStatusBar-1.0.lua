@@ -59,15 +59,22 @@ local abs = math.abs
 local function AnimationTick()
 	for bar, value in pairs(lib.smoothing) do
 		local cur = bar:GetValue()
-		local new = cur + ((value - cur) / 3)
-		if new ~= new then
-			new = value
-		end
-		if cur == value or abs(new - value) < 2 then
+
+		-- WoW 12.0: Check if values are secret and skip animation if so
+		if not canaccessvalue(cur) or not canaccessvalue(value) then
 			bar:SetValue_(value)
 			lib.smoothing[bar] = nil
 		else
-			bar:SetValue_(new)
+			local new = cur + ((value - cur) / 3)
+			if new ~= new then
+				new = value
+			end
+			if cur == value or abs(new - value) < 2 then
+				bar:SetValue_(value)
+				lib.smoothing[bar] = nil
+			else
+				bar:SetValue_(new)
+			end
 		end
 	end
 end
@@ -76,7 +83,13 @@ lib.frame:SetScript('OnUpdate', AnimationTick)
 
 local function SmoothSetValue(self, value)
 	local _, max = self:GetMinMaxValues()
-	if value == self:GetValue() or (self._max and self._max ~= max) then
+	local cur = self:GetValue()
+
+	-- WoW 12.0: Check if values are secret and skip animation if so
+	if not canaccessvalue(value) or not canaccessvalue(cur) or not canaccessvalue(max) then
+		lib.smoothing[self] = nil
+		self:SetValue_(value)
+	elseif value == cur or (self._max and self._max ~= max) then
 		lib.smoothing[self] = nil
 		self:SetValue_(value)
 	else
