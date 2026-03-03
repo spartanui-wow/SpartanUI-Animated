@@ -55,6 +55,7 @@ lib.smoothing = lib.smoothing or {}
 -------------------------------------------------------------------------------
 
 local abs = math.abs
+local canaccessvalue = canaccessvalue or function() return true end
 
 local function AnimationTick()
 	for bar, value in pairs(lib.smoothing) do
