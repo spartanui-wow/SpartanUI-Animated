@@ -330,10 +330,16 @@ function addon:PLAYER_ENTERING_WORLD()
 	if addon.DB.enable then
 		addon:Refresh()
 		for k, v in pairs(s_table) do
-			Smooth:SmoothBar(v.Power)
-			Smooth:SmoothBar(v.Health)
-			if v.CastBar then
-				Smooth:SmoothBar(v.CastBar)
+			if v then
+				if v.Power then
+					Smooth:SmoothBar(v.Power)
+				end
+				if v.Health then
+					Smooth:SmoothBar(v.Health)
+				end
+				if v.CastBar then
+					Smooth:SmoothBar(v.CastBar)
+				end
 			end
 		end
 	end
