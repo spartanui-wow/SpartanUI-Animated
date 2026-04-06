@@ -337,8 +337,8 @@ function addon:PLAYER_ENTERING_WORLD()
 				if v.Health then
 					Smooth:SmoothBar(v.Health)
 				end
-				if v.CastBar then
-					Smooth:SmoothBar(v.CastBar)
+				if v.Castbar then
+					Smooth:SmoothBar(v.Castbar)
 				end
 			end
 		end
@@ -430,15 +430,19 @@ function addon:NewUpdater()
 	for unit, frame in pairs(s_table) do
 		if UnitExists(unit) and frame:IsVisible() then
 			local powerType = (UnitPowerType(unit) or 0)
-			AnimationUpdate(frame.Health, 14)
-			AnimationUpdate(frame.Power, powerType)
+			if frame.Health then
+				AnimationUpdate(frame.Health, 14)
+			end
+			if frame.Power then
+				AnimationUpdate(frame.Power, powerType)
+			end
 			if frame.Castbar and (frame.Castbar.casting or frame.Castbar.channeling) then
 				AnimationUpdate(frame.Castbar, 15)
 			end
 		end
 	end
 	for unit, frame in pairs(s_table_party_target) do
-		if UnitExists(unit) and frame:IsVisible() then
+		if UnitExists(unit) and frame:IsVisible() and frame.Health then
 			AnimationUpdate(frame.Health, 14)
 		end
 	end

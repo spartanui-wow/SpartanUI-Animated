@@ -110,6 +110,9 @@ if upgrade then
 end
 
 function lib:SmoothBar(bar)
+	if not bar then
+		return
+	end
 	if not bar.SetValue_ then
 		bar.SetValue_ = bar.SetValue
 		bar.SetValue = SmoothSetValue
